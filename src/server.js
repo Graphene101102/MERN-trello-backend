@@ -1,15 +1,32 @@
 import express from 'express'
 import { connectDB } from '*/config/mongodb'
-import { env } from "*/config/environtment";
+import { env } from "*/config/environtment"
+import { BoardModel } from './models/board.model'
+import { ColumnModel } from './models/column.model'
 
-const app = express()
+connectDB()
+    .then(() => console.log('connected successfully'))
+    .then(() => bootServer())
+    .catch(error => {
+        console.error(error)
+        process.exit(1)
+    })
 
-connectDB().catch(console.log)
+const bootServer = () => {
+    const app = express()
 
-app.get('/', (req, res) => {
-    res.end('<h1>Hello Viet!</h1><hr/>')
-})
+    app.get('/', async (req, res) => {
 
-app.listen(env.HOST, env.PORT, () => {
-    console.log('hello')
-})
+        // let fakeData ={
+        //     boardId:'6655783f72662e0762bbc96e',
+        //     title: 'Quang Viet',
+        // }
+        // await ColumnModel.createNew(fakeData)
+
+        res.end('<h1>hello</h1><hr/>')
+    })
+
+    app.listen(env.APP_PORT, env.APP_HOST, () => {
+        console.log('hello')
+    })
+}

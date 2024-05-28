@@ -3,10 +3,12 @@ import { HttpStatusCode } from '*/utilities/constants'
 
 const createNew = async (req, res, next) => {
     const condition = Joi.object({
-        title: Joi.string().required().min(3).max(20).trim(),
+        boardId: Joi.string().required(),
+        columnId: Joi.string().required(),
+        title: Joi.string().required().min(3).max(30).trim(),
     })
     try {
-        await condition.validateAsync(req.body, { abortEarly: false})
+        await condition.validateAsync(req.body, { abortEarly: false })
         next()
     } catch (error) {
         res.status(HttpStatusCode.BAD_REQUEST).json({
@@ -15,4 +17,4 @@ const createNew = async (req, res, next) => {
     }
 }
 
-export const boardValidation = { createNew }
+export const cardValidation = { createNew }

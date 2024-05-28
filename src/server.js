@@ -4,6 +4,8 @@ import { env } from "*/config/environtment"
 import { BoardModel } from './models/board.model'
 import { ColumnModel } from './models/column.model'
 
+import { apiV1 } from './routes/V1'
+
 connectDB()
     .then(() => console.log('connected successfully'))
     .then(() => bootServer())
@@ -15,16 +17,10 @@ connectDB()
 const bootServer = () => {
     const app = express()
 
-    app.get('/', async (req, res) => {
+    //enable req.body 
+    app.use(express.json())
 
-        // let fakeData ={
-        //     boardId:'6655783f72662e0762bbc96e',
-        //     title: 'Quang Viet',
-        // }
-        // await ColumnModel.createNew(fakeData)
-
-        res.end('<h1>hello</h1><hr/>')
-    })
+    app.use('/v1', apiV1)
 
     app.listen(env.APP_PORT, env.APP_HOST, () => {
         console.log('hello')
